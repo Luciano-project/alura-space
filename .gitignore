@@ -1,0 +1,33 @@
+# Ignore database files
+*.sqlite3
+
+# Ignore static files
+/staticfiles/
+
+# Ignore media files
+/media/
+
+# Ignore virtual environment
+/venv/
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore local settings
+/local_settings.py
+
+# Ignore logs
+/logs/
+
+# Ignore environment variables file
+.env
+
+
+#ignore shotcurt to venv
+activate.bat
+deactivate.bat
