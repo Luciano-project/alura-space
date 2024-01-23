@@ -29,17 +29,13 @@ def cadastro(request):
     form = CadastroForm()
     if request.method == "POST":
         form = CadastroForm(request.POST)
-        
         if form.is_valid():
-            if form["password"].value() != form["password2"].value(): 
-                messages.error(request, "As senhas não são iguais!")
-                return redirect('cadastro')
             nome=form["nome_cadastro"].value()
             email=form["email"].value()
-            senha=form["password"].value()
+            senha=form["password2"].value()
 
             if User.objects.filter(username=nome).exists():
-                messages.warning(request, "usuario já existe")
+                messages.error(request, "usuario já existe")
                 return redirect('cadastro')
                 # nome de usuario já existente
             usuario = User.objects.create_user(
