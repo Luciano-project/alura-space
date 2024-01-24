@@ -17,5 +17,6 @@ if %errorlevel% equ 0 (
     )
 ) else (
     echo %errorlevel%
+    exit
 )
 exit /b
