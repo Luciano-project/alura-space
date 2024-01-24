@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from apps.gallery.models import Fotografia
+from apps.gallery.forms import FotografiaForms
 
 # Create your views here.
 def index(request):
@@ -31,3 +32,16 @@ def buscar(request):
             fotografias = fotografias.filter(nome__icontains=nome_de_busca)
 
     return render(request, "gallery/buscar.html",{"cards":fotografias})
+
+def nova_imagem(request): 
+    form = FotografiaForms()
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fotografia adicionada com sucesso!")
+            return redirect("index")
+    return render(request, "gallery/nova_imagem.html", {"form":form})
+
+def editar_imagem(request): pass
+
+def deletar_imagem(request): pass
