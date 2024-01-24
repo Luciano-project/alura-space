@@ -33,9 +33,13 @@ def buscar(request):
 
     return render(request, "gallery/buscar.html",{"cards":fotografias})
 
-def nova_imagem(request): 
+def nova_imagem(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "O usuário não está logado")
+        return redirect('login')
     form = FotografiaForms()
     if request.method == "POST":
+        form = FotografiaForms(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Fotografia adicionada com sucesso!")
