@@ -7,7 +7,11 @@ from django.contrib import auth, messages
 # Create your views here.
 def login(request):
     form = LoginForms()
-    if request.GET["next"]: messages.error(request, "Usuário não autenticado!")
+    redirection = ''
+    if request.GET:
+        if not request.method == "POST": messages.error(request, "Usuário não autenticado!")
+        redirection=request.GET["next"]
+        
     if request.method == "POST":
         form = LoginForms(request.POST)
         if form.is_valid():
@@ -20,11 +24,12 @@ def login(request):
             if usuario is not None:
                 auth.login(request, usuario)
                 messages.success(request, f"{nome} logado com sucesso!")
+                if redirection: return redirect(redirection)
                 return redirect('index')
             else:
                 messages.error(request, "Credenciais incorretas")
                 return redirect('login')
-    return render(request, "users/login.html", {"form":form}) 
+    return render(request, "users/login.html", {"form":form, "redirect_get":redirection}) 
 
 def cadastro(request): 
     form = CadastroForm()
