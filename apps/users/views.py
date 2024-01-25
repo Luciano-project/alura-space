@@ -7,6 +7,7 @@ from django.contrib import auth, messages
 # Create your views here.
 def login(request):
     form = LoginForms()
+    if request.GET["next"]: messages.error(request, "Usuário não autenticado!")
     if request.method == "POST":
         form = LoginForms(request.POST)
         if form.is_valid():

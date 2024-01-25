@@ -5,25 +5,21 @@ from apps.gallery.models import Fotografia
 from apps.gallery.forms import FotografiaForms
 
 # Create your views here.
+@login_required(login_url='login')
 def index(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "O usuário não está logado")
-        return redirect('login')
+
     fotografia = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
     return render(request,"gallery/index.html",{"cards":fotografia})
 
-
+@login_required(login_url='login')
 def imagem(request, fotografia_id):
-    if not request.user.is_authenticated:
-        messages.error(request, "O usuário não está logado")
-        return redirect('login')
+
     fotografia = get_object_or_404(Fotografia, pk=fotografia_id)
     return render(request, "gallery/imagem.html", {"fotografia": fotografia})
 
+@login_required(login_url='login')
 def buscar(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "O usuário não está logado")
-        return redirect('login')
+
     fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
 
     if "buscar" in request.GET:
@@ -33,10 +29,8 @@ def buscar(request):
 
     return render(request, "gallery/buscar.html",{"cards":fotografias})
 
+@login_required(login_url='login')
 def nova_imagem(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "O usuário não está logado")
-        return redirect('login')
     form = FotografiaForms()
     if request.method == "POST":
         form = FotografiaForms(request.POST, request.FILES)
@@ -48,4 +42,6 @@ def nova_imagem(request):
 
 def editar_imagem(request): pass
 
-def deletar_imagem(request): pass
+def deletar_imagem(request): 
+    if not request.user.is_authenticated:
+        pass
