@@ -55,6 +55,8 @@ def editar_imagem(request, fotografia_id):
     
 
 @login_required(login_url='login')
-def deletar_imagem(request): 
-    if not request.user.is_authenticated:
-        pass
+def deletar_imagem(request, fotografia_id): 
+    fotografia = Fotografia.objects.get(id=fotografia_id)
+    fotografia.delete()
+    messages.success(request, "Fotografia deletada com sucesso!")
+    return redirect('index')
