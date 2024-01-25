@@ -1,0 +1,10 @@
+{% load static %}
+<section class="tags">
+    <p class="tags__titulo">Busque por tags:</p>
+    <ul class="tags__lista">
+        <li class="tags__tag"><a href="{% URL 'filter' 'NEBULOSA' %}" class="btn" style="color: #C9C9C9">Nebulosa</a></li>
+        <li class="tags__tag"><a href="{% URL 'filter' 'ESTRELA' %}"class="btn" style="color: #C9C9C9">Estrela</a></li>
+        <li class="tags__tag"><a href="{% URL 'filter' 'GALÁXIA' %}"class="btn" style="color: #C9C9C9">Galáxia</a></li>
+        <li class="tags__tag"><a href="{% URL 'filter' 'PLANETA' %}"class="btn" style="color: #C9C9C9">Planeta</a></li>
+    </ul>
+</section>
