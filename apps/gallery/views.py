@@ -7,21 +7,17 @@ from apps.gallery.forms import FotografiaForms
 # Create your views here.
 @login_required(login_url='login')
 def index(request):
-
     fotografia = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
     return render(request,"gallery/index.html",{"cards":fotografia})
 
 @login_required(login_url='login')
 def imagem(request, fotografia_id):
-
     fotografia = get_object_or_404(Fotografia, pk=fotografia_id)
     return render(request, "gallery/imagem.html", {"fotografia": fotografia})
 
 @login_required(login_url='login')
 def buscar(request):
-
     fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
-
     if "buscar" in request.GET:
         nome_de_busca = request.GET["buscar"]
         if nome_de_busca:
@@ -40,8 +36,25 @@ def nova_imagem(request):
             return redirect("index")
     return render(request, "gallery/nova_imagem.html", {"form":form})
 
-def editar_imagem(request): pass
 
+@login_required(login_url='login')
+def editar_imagem(request, fotografia_id):
+
+    fotografia = Fotografia.objects.get(id=fotografia_id)
+    #fotos_autorizadas = foto.filter(usuario=request.username)
+    form = FotografiaForms(request.POST or None, instance=fotografia)
+
+    if request.method=="POST":
+        form = FotografiaForms(request.POST, request.FILES, instance=fotografia)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fotografia editada com sucesso!")
+            return redirect("index")
+        
+    return render(request, "gallery/editar_imagem.html", {"form":form, "fotografia_id": fotografia_id})
+    
+
+@login_required(login_url='login')
 def deletar_imagem(request): 
     if not request.user.is_authenticated:
         pass
