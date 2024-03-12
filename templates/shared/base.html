@@ -19,7 +19,9 @@
         {% block content %}{% endblock %}
         </main>
     </div>
-    {% include 'partials/_footer.html'%}
+    {% if user.is_authenticated %}
+        {% include 'partials/_footer.html'%}
+    {% endif %}
     
 
 </body>
