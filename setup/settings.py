@@ -14,7 +14,6 @@ from pathlib import Path, os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -128,7 +127,6 @@ STATICFILES_DIRS =[
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-1
 # Define abspath to the media files folder
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
